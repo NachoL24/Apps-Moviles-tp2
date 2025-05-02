@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import com.example.juego_adivinar_numero_aleatorio.ui.theme.JuegoadivinarnumeroaleatorioTheme
 
 class MainActivity : ComponentActivity() {
@@ -125,7 +126,9 @@ fun ThemeToggleButton(isDarkTheme: Boolean, onToggle: () -> Unit) {
         label = "icon rotation"
     )
 
-    IconButton(onClick = onToggle) {
+    IconButton(
+        onClick = onToggle,
+    ) {
         Icon(
             painter = painterResource(
                 if (isDarkTheme) R.drawable.ic_moon else R.drawable.ic_sun
