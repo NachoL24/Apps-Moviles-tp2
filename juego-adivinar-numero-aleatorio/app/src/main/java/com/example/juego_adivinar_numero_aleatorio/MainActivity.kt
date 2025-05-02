@@ -3,24 +3,25 @@ package com.example.juego_adivinar_numero_aleatorio
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.draw.rotate
 import com.example.juego_adivinar_numero_aleatorio.ui.theme.JuegoadivinarnumeroaleatorioTheme
-import androidx.compose.foundation.layout.Arrangement
 
 class MainActivity : ComponentActivity() {
 
     private lateinit var db: GameDbHelper
     private var randomNumber by mutableStateOf(1)
-    private var score by mutableStateOf(0)
-    private var fails by mutableStateOf(0)
-    private var guess by mutableStateOf(TextFieldValue(""))
 
     private fun generateNewNumber() {
         randomNumber = (1..5).random()
@@ -28,14 +29,31 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        db = GameDbHelper(this)
+        generateNewNumber()
+
         setContent {
-            JuegoadivinarnumeroaleatorioTheme {
+            var isDarkTheme by remember { mutableStateOf(false) }
+            var score by remember { mutableStateOf(0) }
+            var fails by remember { mutableStateOf(db.getFails()) }
+            var guess by remember { mutableStateOf(TextFieldValue("")) }
 
-                db = GameDbHelper(this)
-                fails = db.getFails()
-
+            JuegoadivinarnumeroaleatorioTheme(darkTheme = isDarkTheme) {
                 Scaffold(
-                    modifier = Modifier.fillMaxSize(),
+                    topBar = {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            ThemeToggleButton(
+                                isDarkTheme = isDarkTheme,
+                                onToggle = { isDarkTheme = !isDarkTheme }
+                            )
+                        }
+                    },
                     content = { paddingValues ->
                         Column(
                             modifier = Modifier
@@ -56,30 +74,30 @@ class MainActivity : ComponentActivity() {
 
                             Spacer(modifier = Modifier.height(16.dp))
 
-                            Button(
-                                onClick = {
-                                    val userGuess = guess.text.toIntOrNull()
-                                    if (userGuess == null || userGuess !in 1..5) {
-                                        fails = db.getFails()
+                            Button(onClick = {
+                                val userGuess = guess.text.toIntOrNull()
+                                if (userGuess == null || userGuess !in 1..5) {
+                                    fails = db.getFails()
+                                } else {
+                                    if (userGuess == randomNumber) {
+                                        score += 10
+                                        db.resetFails()
+                                        fails = 0
                                     } else {
-                                        if (userGuess == randomNumber) {
-                                            score += 10
-                                            db.resetFails()
-                                        } else {
-                                            fails += 1
-                                            db.setFails(fails)
-                                        }
-
-                                        if (fails >= 5) {
-                                            score = 0
-                                            db.resetFails()
-                                        }
+                                        fails += 1
+                                        db.setFails(fails)
                                     }
 
-                                    generateNewNumber()
-                                    fails = db.getFails()
+                                    if (fails >= 5) {
+                                        score = 0
+                                        db.resetFails()
+                                        fails = 0
+                                    }
                                 }
-                            ) {
+
+                                generateNewNumber()
+                                fails = db.getFails()
+                            }) {
                                 Text("Adivinar")
                             }
 
@@ -87,7 +105,7 @@ class MainActivity : ComponentActivity() {
 
                             Text(
                                 text = when {
-                                    fails >= 5 -> "Perdiste. Puntaje reiniciado."
+                                    fails >= 5 -> "¡Perdiste! Ahora tu puntuación es 0." // Mensaje al perder
                                     randomNumber == (guess.text.toIntOrNull() ?: -1) -> "¡Correcto! +10 puntos"
                                     else -> "Sigue intentando"
                                 }
@@ -97,5 +115,26 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
+    }
+}
+
+@Composable
+fun ThemeToggleButton(isDarkTheme: Boolean, onToggle: () -> Unit) {
+    val rotation by animateFloatAsState(
+        targetValue = if (isDarkTheme) 180f else 0f,
+        label = "icon rotation"
+    )
+
+    IconButton(onClick = onToggle) {
+        Icon(
+            painter = painterResource(
+                if (isDarkTheme) R.drawable.ic_moon else R.drawable.ic_sun
+            ),
+            contentDescription = "Cambiar tema",
+            modifier = Modifier
+                .size(32.dp)
+                .rotate(rotation),
+            tint = if (isDarkTheme) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onSurface
+        )
     }
 }
