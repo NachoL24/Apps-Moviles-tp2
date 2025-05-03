@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Light" parent="Theme.AppCompat.Light">
+        <item name="android:windowBackground">@color/background_light</item>
+        <item name="android:textColor">@color/textColorLight</item>
+        <item name="android:textColorPrimary">@color/textColorLight</item>
+        <item name="colorPrimary">@color/colorPrimaryLight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkLight</item>
+        <item name="colorAccent">@color/colorAccentLight</item>
+        <item name="appTitleColor">@color/black</item>
+    </style>
+
+    <style name="Theme.Dark" parent="Theme.AppCompat.DayNight">
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="android:textColor">@color/textColorDark</item>
+        <item name="android:textColorPrimary">@color/textColorDark</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkDark</item>
+        <item name="colorAccent">@color/colorAccentDark</item>
+        <item name="appTitleColor">@color/white</item>
+    </style>
+
+</resources>

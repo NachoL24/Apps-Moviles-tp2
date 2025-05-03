@@ -18,13 +18,25 @@ class GameDbHelper(context: Context) : SQLiteOpenHelper(context, "game.db", null
 
     fun getFails(): Int {
         val db = readableDatabase
-        val cursor = db.rawQuery("SELECT fails FROM attempts WHERE id = 1", null)
-        return if (cursor.moveToFirst()) cursor.getInt(0) else 0
+        val cursor = db.rawQuery("SELECT fails FROM attempts LIMIT 1", null)
+        val fails = if (cursor.moveToFirst()) cursor.getInt(0) else {
+            db.execSQL("INSERT INTO attempts (fails) VALUES (0)")
+            0
+        }
+        cursor.close()
+        return fails
     }
 
     fun setFails(fails: Int) {
         val db = writableDatabase
-        db.execSQL("UPDATE attempts SET fails = ? WHERE id = 1", arrayOf(fails))
+        val cursor = db.rawQuery("SELECT id FROM attempts LIMIT 1", null)
+        if (cursor.moveToFirst()) {
+            val id = cursor.getInt(0)
+            db.execSQL("UPDATE attempts SET fails = ? WHERE id = ?", arrayOf(fails, id))
+        } else {
+            db.execSQL("INSERT INTO attempts (fails) VALUES (?)", arrayOf(fails))
+        }
+        cursor.close()
     }
 
     fun resetFails() = setFails(0)

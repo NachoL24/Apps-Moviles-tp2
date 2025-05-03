@@ -1,28 +1,17 @@
 package com.example.juego_adivinar_numero_aleatorio
 
+import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Color
-import com.example.juego_adivinar_numero_aleatorio.ui.theme.JuegoadivinarnumeroaleatorioTheme
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var db: GameDbHelper
-    private var randomNumber by mutableStateOf(1)
+    private var randomNumber: Int = 1
+    private lateinit var sharedPref: SharedPreferences
+    private var isDarkMode = false
 
     private fun generateNewNumber() {
         randomNumber = (1..5).random()
@@ -31,113 +20,73 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        sharedPref = getPreferences(MODE_PRIVATE)
+        isDarkMode = sharedPref.getBoolean("isDarkMode", isDarkMode())
+
+        setAppTheme(isDarkMode)
+
+        setContentView(R.layout.activity_main)
+
         db = GameDbHelper(this)
         generateNewNumber()
 
-        setContent {
-            var isDarkTheme by remember { mutableStateOf(false) }
-            var score by remember { mutableStateOf(0) }
-            var fails by remember { mutableStateOf(db.getFails()) }
-            var guess by remember { mutableStateOf(TextFieldValue("")) }
+        val iconThemeToggle = findViewById<ImageView>(R.id.iconThemeToggle)
+        val textMessage = findViewById<TextView>(R.id.textMessage)
+        val inputGuess = findViewById<EditText>(R.id.inputGuess)
+        val btnGuess = findViewById<Button>(R.id.btnGuess)
+        val textAttempts = findViewById<TextView>(R.id.textAttempts)
 
-            JuegoadivinarnumeroaleatorioTheme(darkTheme = isDarkTheme) {
-                Scaffold(
-                    topBar = {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            horizontalArrangement = Arrangement.End
-                        ) {
-                            ThemeToggleButton(
-                                isDarkTheme = isDarkTheme,
-                                onToggle = { isDarkTheme = !isDarkTheme }
-                            )
-                        }
-                    },
-                    content = { paddingValues ->
-                        Column(
-                            modifier = Modifier
-                                .padding(paddingValues)
-                                .fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text("Intentos fallidos: $fails")
-                            Spacer(modifier = Modifier.height(16.dp))
+        iconThemeToggle.setImageResource(if (isDarkMode) R.drawable.ic_moon else R.drawable.ic_sun)
 
-                            TextField(
-                                value = guess,
-                                onValueChange = { guess = it },
-                                label = { Text("Ingresa un número entre 1 y 5") },
-                                modifier = Modifier.padding(16.dp)
-                            )
+        textAttempts.text = "Intentos fallidos: ${db.getFails()}"
 
-                            Spacer(modifier = Modifier.height(16.dp))
+        iconThemeToggle.setOnClickListener {
+            // Alternar el tema
+            isDarkMode = !isDarkMode
+            // Guardar preferencia
+            with(sharedPref.edit()) {
+                putBoolean("isDarkMode", isDarkMode)
+                apply()
+            }
+            recreate()
+        }
 
-                            Button(onClick = {
-                                val userGuess = guess.text.toIntOrNull()
-                                if (userGuess == null || userGuess !in 1..5) {
-                                    fails = db.getFails()
-                                } else {
-                                    if (userGuess == randomNumber) {
-                                        score += 10
-                                        db.resetFails()
-                                        fails = 0
-                                    } else {
-                                        fails += 1
-                                        db.setFails(fails)
-                                    }
+        btnGuess.setOnClickListener {
+            val userGuess = inputGuess.text.toString().toIntOrNull()
+            val fails = db.getFails()
 
-                                    if (fails >= 5) {
-                                        score = 0
-                                        db.resetFails()
-                                        fails = 0
-                                    }
-                                }
+            if (userGuess == null || userGuess !in 1..5) {
+                Toast.makeText(this, "Por favor ingresa un número válido entre 1 y 5", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-                                generateNewNumber()
-                                fails = db.getFails()
-                            }) {
-                                Text("Adivinar")
-                            }
+            if (userGuess == randomNumber) {
+                Toast.makeText(this, "¡Correcto! +10 puntos", Toast.LENGTH_SHORT).show()
+                db.resetFails()
+                textMessage.text = "¡Correcto!"
+            } else {
+                db.setFails(fails + 1)
+                Toast.makeText(this, "Incorrecto", Toast.LENGTH_SHORT).show()
+                textMessage.text = "Sigue intentando"
+            }
 
-                            Spacer(modifier = Modifier.height(16.dp))
+            val updatedFails = db.getFails()
+            textAttempts.text = "Intentos fallidos: $updatedFails"
 
-                            Text(
-                                text = when {
-                                    fails >= 5 -> "¡Perdiste! Ahora tu puntuación es 0." // Mensaje al perder
-                                    randomNumber == (guess.text.toIntOrNull() ?: -1) -> "¡Correcto! +10 puntos"
-                                    else -> "Sigue intentando"
-                                }
-                            )
-                        }
-                    }
-                )
+            if (updatedFails >= 5) {
+                db.resetFails()
+                Toast.makeText(this, "¡Perdiste! Tu puntuación se reinicia.", Toast.LENGTH_SHORT).show()
+                textMessage.text = "¡Perdiste!"
+                textAttempts.text = "Intentos fallidos: 0"
             }
         }
     }
-}
 
-@Composable
-fun ThemeToggleButton(isDarkTheme: Boolean, onToggle: () -> Unit) {
-    val rotation by animateFloatAsState(
-        targetValue = if (isDarkTheme) 180f else 0f,
-        label = "icon rotation"
-    )
+    private fun isDarkMode(): Boolean {
+        return (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+    }
 
-    IconButton(
-        onClick = onToggle,
-    ) {
-        Icon(
-            painter = painterResource(
-                if (isDarkTheme) R.drawable.ic_moon else R.drawable.ic_sun
-            ),
-            contentDescription = "Cambiar tema",
-            modifier = Modifier
-                .size(32.dp)
-                .rotate(rotation),
-            tint = if (isDarkTheme) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onSurface
-        )
+    private fun setAppTheme(isDarkMode: Boolean) {
+        setTheme(if (isDarkMode) R.style.Theme_Dark else R.style.Theme_Light)
     }
 }
