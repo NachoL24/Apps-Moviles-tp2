@@ -24,8 +24,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="40dp"
         android:gravity="center"
-        android:text="juego-adivinar-numero-aleatorio"
-        android:textColor="?attr/appTitleColor"
+        android:text="Adivina el Número Aleatorio"
+        android:textColor="?attr/fontColor"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -45,7 +45,7 @@
             android:textSize="20sp"
             android:layout_marginBottom="32dp"
             android:textStyle="bold"
-            android:textColor="?attr/appTitleColor" />
+            android:textColor="?attr/fontColor" />
 
         <EditText
             android:id="@+id/inputGuess"
@@ -79,6 +79,6 @@
             android:text="Intentos fallidos: 0"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="?attr/appTitleColor" />
+            android:textColor="?attr/fontColor" />
     </LinearLayout>
 </RelativeLayout>

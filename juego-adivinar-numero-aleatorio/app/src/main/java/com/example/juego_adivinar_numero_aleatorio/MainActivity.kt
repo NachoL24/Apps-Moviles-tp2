@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         db = GameDbHelper(this)
+        db.resetFails()
         generateNewNumber()
 
         val iconThemeToggle = findViewById<ImageView>(R.id.iconThemeToggle)
@@ -41,9 +42,7 @@ class MainActivity : AppCompatActivity() {
         textAttempts.text = "Intentos fallidos: ${db.getFails()}"
 
         iconThemeToggle.setOnClickListener {
-            // Alternar el tema
             isDarkMode = !isDarkMode
-            // Guardar preferencia
             with(sharedPref.edit()) {
                 putBoolean("isDarkMode", isDarkMode)
                 apply()
@@ -64,6 +63,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "¡Correcto! +10 puntos", Toast.LENGTH_SHORT).show()
                 db.resetFails()
                 textMessage.text = "¡Correcto!"
+                generateNewNumber()
             } else {
                 db.setFails(fails + 1)
                 Toast.makeText(this, "Incorrecto", Toast.LENGTH_SHORT).show()
@@ -78,8 +78,14 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "¡Perdiste! Tu puntuación se reinicia.", Toast.LENGTH_SHORT).show()
                 textMessage.text = "¡Perdiste!"
                 textAttempts.text = "Intentos fallidos: 0"
+                generateNewNumber()
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        db.resetFails()
     }
 
     private fun isDarkMode(): Boolean {
