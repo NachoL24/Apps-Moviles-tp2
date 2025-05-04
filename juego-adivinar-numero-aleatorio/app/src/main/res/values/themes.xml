@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    val LightColorScheme = lightColorScheme()
+    val DarkColorScheme = darkColorScheme()
     <style name="Theme.Juegoadivinarnumeroaleatorio" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>

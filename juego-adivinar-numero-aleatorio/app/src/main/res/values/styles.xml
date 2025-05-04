@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Light" parent="Theme.AppCompat.Light">
+        <item name="android:windowBackground">@color/white</item>
+        <item name="colorPrimary">@color/violet</item>
+        <item name="fontColor">@color/black</item>
+    </style>
+
+    <style name="Theme.Dark" parent="Theme.AppCompat.DayNight">
+        <item name="android:windowBackground">@color/black</item>
+        <item name="colorPrimary">@color/purple</item>
+        <item name="fontColor">@color/white</item>
+    </style>
+
+</resources>
