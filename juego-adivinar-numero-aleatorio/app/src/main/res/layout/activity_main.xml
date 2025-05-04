@@ -11,8 +11,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
         android:contentDescription="Cambiar tema"
         android:src="@drawable/ic_sun" />
 
@@ -21,19 +21,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/iconThemeToggle"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="60dp"
         android:gravity="center"
         android:text="Adivina el Número Aleatorio"
         android:textColor="?attr/fontColor"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/appTitle"
-        android:layout_marginTop="113.4dp"
+        android:layout_centerInParent="true"
         android:orientation="vertical"
         android:gravity="center">
 
@@ -42,20 +41,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Adivina un número del 1 al 5"
-            android:textSize="20sp"
-            android:layout_marginBottom="32dp"
+            android:textSize="22sp"
+            android:layout_marginBottom="40dp"
             android:textStyle="bold"
             android:textColor="?attr/fontColor" />
 
         <EditText
             android:id="@+id/inputGuess"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:inputType="number"
             android:hint="Ingresa tu número"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:padding="16dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="40dp"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             android:textColorHint="?android:attr/textColorSecondary"
@@ -64,21 +63,21 @@
         <Button
             android:id="@+id/btnGuess"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="70dp"
             android:text="ADIVINAR"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textColor="@android:color/white"
             android:textStyle="bold"
             app:backgroundTint="?attr/colorPrimary"
-            android:layout_marginBottom="32dp" />
+            android:layout_marginBottom="40dp" />
 
         <TextView
             android:id="@+id/textAttempts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Intentos fallidos: 0"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="?attr/fontColor" />
+            android:textColor="?attr/fontColor"
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </RelativeLayout>

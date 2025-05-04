@@ -18,13 +18,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         sharedPref = getPreferences(MODE_PRIVATE)
         isDarkMode = sharedPref.getBoolean("isDarkMode", isDarkMode())
-
         setAppTheme(isDarkMode)
 
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         db = GameDbHelper(this)
