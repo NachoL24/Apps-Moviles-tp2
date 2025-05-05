@@ -7,7 +7,6 @@
     android:paddingTop="20dp"
     android:background="?android:attr/windowBackground">
 
-    <!-- Encabezado -->
     <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="0dp"
@@ -39,7 +38,6 @@
             android:textColor="?attr/fontColor" />
     </LinearLayout>
 
-    <!-- Botón de tema -->
     <ImageView
         android:id="@+id/iconThemeToggle"
         android:layout_width="40dp"
@@ -49,7 +47,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Card principal -->
     <androidx.cardview.widget.CardView
         android:id="@+id/mainCard"
         android:layout_width="0dp"
@@ -109,7 +106,6 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Card de estadísticas -->
     <androidx.cardview.widget.CardView
         android:id="@+id/statsCard"
         android:layout_width="0dp"
