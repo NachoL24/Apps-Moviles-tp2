@@ -3,81 +3,286 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    android:background="?android:attr/windowBackground">
+    android:background="?android:attr/windowBackground"
+    android:paddingTop="20dp">
+
+    <!-- Encabezado con gradiente -->
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/header_gradient"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/appTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:text="@string/adivina_el_n_mero"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="?attr/fontColor"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/pon_a_prueba_tu_suerte"
+            android:textSize="16sp"
+            android:textColor="?attr/fontColor"/>
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/iconThemeToggle"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
-        android:contentDescription="Cambiar tema"
+        android:layout_margin="20dp"
         android:src="@drawable/ic_sun" />
 
-    <TextView
-        android:id="@+id/appTitle"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/mainCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/iconThemeToggle"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="60dp"
-        android:gravity="center"
-        android:text="Adivina el Número Aleatorio"
-        android:textColor="?attr/fontColor"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+        android:layout_below="@id/headerLayout"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="30dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="15dp"
+        app:cardBackgroundColor="?attr/android:windowBackground">
 
-    <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/textMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/adivina_un_n_mero_del_1_al_5"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/fontColor" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/inputGuess"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/edit_text_background"
+                android:hint="@string/ingresa_tu_n_mero"
+                android:textColorHint="?attr/fontColor"
+                android:inputType="number"
+                android:maxLength="1"
+                android:padding="16dp"
+                android:textAlignment="center"
+                android:textColor="?attr/fontColor"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnGuess"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:text="@string/adivinar"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:backgroundTint="?attr/colorPrimary"
+                android:textColor="?attr/fontColor"
+                android:background="@drawable/button_background"
+
+                android:layout_marginBottom="15dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/statsCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_below="@id/mainCard"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="30dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:cardBackgroundColor="?attr/android:windowBackground">
 
-        <TextView
-            android:id="@+id/textMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Adivina un número del 1 al 5"
-            android:textSize="22sp"
-            android:layout_marginBottom="40dp"
-            android:textStyle="bold"
-            android:textColor="?attr/fontColor" />
-
-        <EditText
-            android:id="@+id/inputGuess"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:inputType="number"
-            android:hint="Ingresa tu número"
-            android:textSize="20sp"
-            android:padding="16dp"
-            android:layout_marginBottom="40dp"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:textColorHint="?android:attr/textColorSecondary"
-            android:background="@drawable/edit_text_black_border" />
-
-        <Button
-            android:id="@+id/btnGuess"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:text="ADIVINAR"
-            android:textSize="20sp"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            app:backgroundTint="?attr/colorPrimary"
-            android:layout_marginBottom="40dp" />
-
-        <TextView
-            android:id="@+id/textAttempts"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Intentos fallidos: 0"
-            android:textColor="?attr/fontColor"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/estadisticas"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:textColor="?attr/fontColor"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/textAttempts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorAccent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Intentos fallidos"
+                        android:textSize="14sp"
+                        android:textColor="?attr/fontColor"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#E0E0E0" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/textPoints"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Puntos"
+                        android:textSize="14sp"
+                        android:textColor="?attr/fontColor"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bestRunCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/statsCard"
+        android:layout_marginHorizontal="20dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:cardBackgroundColor="?attr/android:windowBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mejor_puntuaci_n"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:textColor="?attr/fontColor"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/dateBestRun"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorAccent"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fecha"
+                        android:textSize="14sp"
+                        android:textColor="?attr/fontColor"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#E0E0E0" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/bestRunPoints"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Puntos"
+                        android:textSize="14sp"
+                        android:textColor="?attr/fontColor"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
 </RelativeLayout>

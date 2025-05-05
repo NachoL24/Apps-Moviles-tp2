@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">juego adivinar numero aleatorio</string>
+    <string name="estadisticas">Estadísticas</string>
+    <string name="adivinar">ADIVINAR</string>
+    <string name="ingresa_tu_n_mero">Ingresa tu número</string>
+    <string name="adivina_un_n_mero_del_1_al_5">Adivina un número del 1 al 5</string>
+    <string name="pon_a_prueba_tu_suerte">¡Pon a prueba tu suerte!</string>
+    <string name="adivina_el_n_mero">Adivina el Número</string>
+    <string name="mejor_puntuaci_n">Mejor puntuación</string>
 </resources>
