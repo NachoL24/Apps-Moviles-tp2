@@ -1,18 +1,17 @@
-package com.example.almacen_de_capitales.repositoy
+package com.example.almacen_de_capitales.repository
 
 import com.example.almacen_de_capitales.dao.CityDao
 import com.example.almacen_de_capitales.entity.CityEntity
+import kotlinx.coroutines.flow.Flow
 
-class CityRepository(private val cityDao: CityDao) {
+class CityRepository(private val dao: CityDao) {
+    fun allCities(): Flow<List<CityEntity>> = dao.getAllCities()
 
-    suspend fun insertCity(name: String, country: String, population: Int): CityEntity {
+    fun search(q: String): Flow<List<CityEntity>> =
+        if (q.isBlank()) dao.getAllCities() else dao.searchCities(q)
 
-
-        return CityEntity(
-            0,
-            "asd",
-            "asdasd",
-            123
-        )
-    }
+    suspend fun add(city: CityEntity) = dao.insertCity(city)
+    suspend fun deleteCity(id: Long) = dao.deleteCityById(id)
+    suspend fun deleteCountry(country: String) = dao.deleteCitiesByCountry(country)
+    suspend fun updatePop(id: Long, pop: Int) = dao.updatePopulation(id, pop)
 }

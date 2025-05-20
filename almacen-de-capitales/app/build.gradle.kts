@@ -44,6 +44,7 @@ android {
 dependencies {
 
     implementation(libs.androidx.room.runtime)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation(libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
     implementation("androidx.cardview:cardview:1.0.0")
@@ -57,6 +58,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.activity:activity-ktx:1.10.1")
     implementation("com.google.android.material:material:1.6.0")
     implementation(libs.androidx.room.common.jvm)
     implementation(libs.androidx.room.runtime.android)

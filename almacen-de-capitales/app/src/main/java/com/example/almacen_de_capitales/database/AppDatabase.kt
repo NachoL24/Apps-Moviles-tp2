@@ -1,6 +1,5 @@
-package com.example.almacen_de_capitales.database
-
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -17,6 +16,7 @@ abstract class AppDatabase: RoomDatabase() {
 
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
+                Log.d("DB", "Creando nueva instancia de la base de datos")
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,

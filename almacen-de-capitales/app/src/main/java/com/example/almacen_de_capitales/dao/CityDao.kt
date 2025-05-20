@@ -22,4 +22,14 @@ interface CityDao {
 
     @Query("UPDATE capital_cities SET population = :newPopulation WHERE id = :id")
     suspend fun updatePopulation(id: Long, newPopulation: Int)
+
+    @Query("SELECT * FROM capital_cities ORDER BY cityName ASC")
+    fun getAllCities(): kotlinx.coroutines.flow.Flow<List<CityEntity>>
+
+    @Query("""
+        SELECT * FROM capital_cities
+        WHERE LOWER(cityName) LIKE LOWER('%' || :name || '%')
+        ORDER BY cityName ASC
+    """)
+    fun searchCities(name: String): kotlinx.coroutines.flow.Flow<List<CityEntity>>
 }

@@ -12,9 +12,8 @@
         android:fullBackupContent="@xml/backup_rules"
         android:theme="@style/Theme.Almacendecapitales"
         tools:targetApi="31">
-
         <activity
-            android:name=".CreateCity"
+            android:name=".MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.Almacendecapitales">
@@ -25,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".CreateCityActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.Almacendecapitales">
