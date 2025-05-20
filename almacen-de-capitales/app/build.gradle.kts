@@ -9,6 +9,11 @@ android {
     namespace = "com.example.almacen_de_capitales"
     compileSdk = 35
 
+    buildFeatures {
+        compose = true
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.almacen_de_capitales"
         minSdk = 24
@@ -41,11 +46,16 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
+    implementation(libs.roomRuntime)
+    implementation(libs.roomKtx)
+    kapt(libs.roomCompiler)
+    implementation(libs.material)
+    implementation(libs.appcompat)
+    implementation(libs.constraintlayout)
+    implementation(libs.tableview)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.lifecycle.runtime)
+    implementation(libs.lifecycle.viewmodel)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
