@@ -9,17 +9,17 @@ import com.example.almacen_de_capitales.entity.CityEntity
 @Dao
 interface CityDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCity(city: CityEntity)
+    suspend fun insertCity(city: CityEntity):Long
 
-    @Query("SELECT * FROM capital_cities WHERE cityName = :name")
-    suspend fun getCityByName(name: String): CityEntity?
+    @Query("SELECT * FROM capital_cities WHERE LOWER(cityName) LIKE LOWER('%' || :name  || '%')")
+    suspend fun getCityByName(name: String): List<CityEntity>
 
-    @Query("DELETE FROM capital_cities WHERE cityName = :name")
-    suspend fun deleteCityByName(name: String)
+    @Query("DELETE FROM capital_cities WHERE id = :id")
+    suspend fun deleteCityById(id: Long)
 
     @Query("DELETE FROM capital_cities WHERE countryName = :country")
     suspend fun deleteCitiesByCountry(country: String)
 
-    @Query("UPDATE capital_cities SET population = :newPopulation WHERE cityName = :cityName")
-    suspend fun updatePopulation(cityName: String, newPopulation: Int)
+    @Query("UPDATE capital_cities SET population = :newPopulation WHERE id = :id")
+    suspend fun updatePopulation(id: Long, newPopulation: Int)
 }
