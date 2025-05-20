@@ -5,7 +5,7 @@ import com.example.almacen_de_capitales.entity.CityEntity
 
 class CityRepository(private val cityDao: CityDao) {
 
-    suspend fun insertCity(name: String, country: String): CityEntity {
+    suspend fun insertCity(name: String, country: String, population: Int): CityEntity {
 
 
         return CityEntity(

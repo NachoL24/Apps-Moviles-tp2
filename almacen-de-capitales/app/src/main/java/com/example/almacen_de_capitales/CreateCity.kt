@@ -5,16 +5,28 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.example.almacen_de_capitales.database.AppDatabase
 import com.example.almacen_de_capitales.databinding.CreateCityBinding
+import com.example.almacen_de_capitales.repositoy.CityRepository
+import com.example.almacen_de_capitales.view_model.CityViewModel
+import com.example.almacen_de_capitales.view_model.CityViewModelFactory
 import com.google.android.material.textfield.TextInputLayout
 
 class CreateCity: AppCompatActivity() {
     private lateinit var binding: CreateCityBinding
+    private lateinit var viewModel: CityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = CreateCityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val dao = AppDatabase.getInstance(applicationContext).cityDao()
+        val repository = CityRepository(dao)
+        val factory = CityViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, factory)[CityViewModel::class.java]
+
 
         binding.inputCityName.addTextChangedListener(createTextWatcher(binding.cityNameLayout))
         binding.inputCountryName.addTextChangedListener(createTextWatcher(binding.countryNameLayout))
@@ -45,6 +57,8 @@ class CreateCity: AppCompatActivity() {
             } else {
                 binding.populationLayout.error = null
             }
+
+            viewModel.insertCity(cityName, countryName, Integer.parseInt(populationString))
 
             Toast.makeText(this, "Procesando datos...", Toast.LENGTH_LONG).show()
         }
