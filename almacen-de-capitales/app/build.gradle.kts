@@ -2,17 +2,11 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
     namespace = "com.example.almacen_de_capitales"
     compileSdk = 35
-
-    buildFeatures {
-        compose = true
-        viewBinding = true
-    }
 
     defaultConfig {
         applicationId = "com.example.almacen_de_capitales"
@@ -42,20 +36,14 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 }
 
 dependencies {
-    implementation(libs.roomRuntime)
-    implementation(libs.roomKtx)
-    kapt(libs.roomCompiler)
-    implementation(libs.material)
-    implementation(libs.appcompat)
-    implementation(libs.constraintlayout)
-    implementation(libs.tableview)
+
+    implementation("androidx.cardview:cardview:1.0.0")
     implementation(libs.androidx.core.ktx)
-    implementation(libs.lifecycle.runtime)
-    implementation(libs.lifecycle.viewmodel)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -63,6 +51,10 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.google.android.material:material:1.6.0")
+    implementation(libs.androidx.room.common.jvm)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -7,20 +7,17 @@ pluginManagement {
                 includeGroupByRegex("androidx.*")
             }
         }
-        gradlePluginPortal()
         mavenCentral()
-        maven(url = "https://jitpack.io")
+        gradlePluginPortal()
     }
 }
-
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
-        maven(url = "https://jitpack.io")
     }
 }
 
-rootProject.name = "almacen-de-capitales"
+rootProject.name = "juego-adivinar-numero-aleatorio"
 include(":app")
