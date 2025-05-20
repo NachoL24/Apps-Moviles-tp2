@@ -67,24 +67,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="Filtrar por país"
+            android:hint="Eliminar por país"
             android:padding="12dp"
             android:background="@drawable/bg_rounded_surface"
             app:layout_constraintTop_toBottomOf="@id/searchView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
-
-        <TextView
-            android:id="@+id/tvEmpty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No hay ciudades guardadas"
-            android:textColor="@color/text"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/countryFilter"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="24dp"/>
 
         <!-- Lista de ciudades -->
         <androidx.recyclerview.widget.RecyclerView
